@@ -1,0 +1,1 @@
+<object data="" type="html"><?=$embed?></object>

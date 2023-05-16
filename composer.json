@@ -1,0 +1,15 @@
+{
+    "name": "rycconsulting/gestor-certificados",
+    "autoload": {
+        "psr-4": {
+            "Rycconsulting\\GestorCertificados\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rycconsulting",
+            "email": "virtual@rc-consulting.org"
+        }
+    ],
+    "require": {}
+}
