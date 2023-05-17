@@ -14,7 +14,7 @@ class CertificadoController{
             if($cnx instanceof PDOException){
                 return $cnx->getMessage();
             }
-            $results = $cnx->query("SELECT *,alumno.nombre,certificado.nombre as CursoDiplomado FROM alumno INNER JOIN certificado ON certificado.id_alumno = alumno.id WHERE alumno.dni = '$dni'");
+            $results = $cnx->query("SELECT *,alumno.nombre,certificado.nombre as CursoDiplomado FROM alumno INNER JOIN certificado ON certificado.id_alumno = alumno.id WHERE alumno.dni = '$dni' AND certificado.publicado = true AND alumno.publicado = true");
             $results = $results->fetchAll(PDO::FETCH_OBJ);
             return $results;
         } catch (\Throwable $th) {
