@@ -1,7 +1,26 @@
 // console.log('working in frontend');
 jQuery(document).ready(function(){
+    let table = new DataTable("#tbResultsCertificadosRyc",{
+        responsive:true,
+        data:[],
+        columns:[
+            { data: 'nombre'},
+            { data: 'dni'},
+            { data: 'CursoDiplomado'},
+            { 
+                data: null, 
+                render:function(data,type,row,meta){ 
+                    return '<a target="_blank" href="https://'+window.location.hostname+'/certificados/public/'+ data.file+'">Ver certificado</a>';
+                }
+            }
+
+        ]
+    });
     jQuery("#buscadorCertRyC").on('submit',async function(e){
         e.preventDefault();
+        table.clear();
+        table.draw();
+
         let dni = jQuery('#seachDniValue')[0].value;
         Swal.fire("Consultando certificados...");
         await jQuery.ajax({
@@ -12,6 +31,7 @@ jQuery(document).ready(function(){
                 dni: dni
             },
             success:function(data){
+
                 data = JSON.parse(data);
                 if(data.length<=0){
                     Swal.fire({
@@ -19,28 +39,13 @@ jQuery(document).ready(function(){
                         text: 'Si es alumno por favor comuniquese con nosotros',
                         icon: 'error',
                         confirmButtonText: 'Cerrar'
-                      })
+                      });
                 }
                 else{
-                    let table = new DataTable("#tbResultsCertificadosRyc",{
-                        responsive:true,
-                        data:data,
-                        columns:[
-                            { data: 'nombre'},
-                            { data: 'dni'},
-                            { data: 'CursoDiplomado'},
-                            { 
-                                data: null, 
-                                render:function(data,type,row,meta){ 
-                                    return '<a target="_blank" href="https://'+window.location.hostname+'/certificados/public/'+ data.file+'">Ver certificado</a>';
-                                }
-                            }
-
-                        ]
-                    });
+                    // console.log("Se agrego nueva data");
+                    table.rows.add(data);
+                    table.draw();
                     Swal.close();
-                    table
-                    
                     
                 }
             },
